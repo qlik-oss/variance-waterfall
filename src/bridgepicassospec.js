@@ -1,7 +1,7 @@
 import ThemeManager from './theme';
 import { interactionsSetup } from './interactions.js';
 
-export default function (layout, direction) {
+export default function (layout, direction, isEditMode) {
   let labels = {
     startvalue: layout.labelsshow ? "Start Value" : layout.startName,
     endvalue: layout.labelsshow ? "End Value" : layout.endName,
@@ -180,12 +180,12 @@ export default function (layout, direction) {
         }
       },
       brush: {
-        trigger: [{
+        trigger: (isEditMode ? [] : [{
           on: 'tap',
           contexts: ['highlight'],
           globalPropagation: 'stop',
           propagation: 'stop'
-        }],
+        }]),
         consume: [{
           context: 'highlight',
           style: {
