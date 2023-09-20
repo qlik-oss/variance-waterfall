@@ -4,8 +4,8 @@ import definition from "./definition.js";
 import controller from "./controller.js";
 import paint from "./paint.js";
 import resize from "./resize.js";
-import support from './support.js';
-import { initVarianceCube } from './dataset';
+import support from "./support.js";
+import { initVarianceCube } from "./dataset";
 
 export default {
   initialProperties: initialProperties,
@@ -16,10 +16,13 @@ export default {
   paint: paint,
   resize: resize,
   setSnapshotData: async function (snapshotLayout) {
-    snapshotLayout.snapshotData.varianceCube = await initVarianceCube(this, snapshotLayout);
+    snapshotLayout.snapshotData.varianceCube = await initVarianceCube(
+      this,
+      snapshotLayout
+    );
     return snapshotLayout;
   },
   clearSelectedValues() {
     this.$scope.chartBrush.clear();
-  }
+  },
 };

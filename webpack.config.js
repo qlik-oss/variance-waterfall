@@ -1,67 +1,71 @@
-const StyleLintPlugin = require('stylelint-webpack-plugin');
-const packageJSON = require('./package.json');
-const path = require('path');
+const StyleLintPlugin = require("stylelint-webpack-plugin");
+const packageJSON = require("./package.json");
+const path = require("path");
+// const ESLintPlugin = require("eslint-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
 const DIST = path.resolve("./dist");
-const MODE = process.env.NODE_ENV || 'development';
-const SOURCE_MAP = 'sourec-map';
-const DEVTOOL = (process.env.NODE_ENV === 'development') ? SOURCE_MAP : false;
+const MODE = process.env.NODE_ENV || "development";
+const SOURCE_MAP = "source-map";
+const DEVTOOL = MODE === "development" ? SOURCE_MAP : false;
 
-console.log('Webpack mode:', MODE); // eslint-disable-line no-console
+console.log("Webpack mode:", MODE); // eslint-disable-line no-console
+
+const eslintPluginOptions = {
+  enforce: "pre",
+  test: /\.js$/,
+  extensions: [`js`, `jsx`, "ts"],
+  exclude: [/(node_modules)| Library/],
+  options: {
+    failOnError: true,
+  },
+};
 
 const config = {
   devtool: DEVTOOL,
-  entry: [
-    './src/index.js'
-  ],
+  entry: ["./src/index.js"],
   mode: MODE,
   output: {
     filename: `${packageJSON.name}.js`,
-    libraryTarget: 'amd',
-    path: DIST
+    libraryTarget: "amd",
+    path: DIST,
   },
   externals: {
     qlik: {
-      amd: 'qlik',
-      commonjs: 'qlik',
-      commonjs2: 'qlik',
-      root: '_'
-    }
+      amd: "qlik",
+      commonjs: "qlik",
+      commonjs2: "qlik",
+      root: "_",
+    },
   },
   module: {
     rules: [
       {
-        enforce: "pre",
-        test: /\.js$/,
-        exclude: /(node_modules|Library)/,
-        loader: "eslint-loader",
-        options: {
-          failOnError: true
-        }
-      },
-      {
         test: /.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            presets: ['@babel/preset-env']
-          }
-        }
+            presets: ["@babel/preset-env"],
+          },
+        },
       },
       {
         test: /\.html$/,
-        loader: "html-loader"
+        loader: "html-loader",
       },
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      }
-    ]
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
+    ],
   },
-  plugins: [
-    new StyleLintPlugin()
-  ]
+  plugins: [new StyleLintPlugin()],
+  // plugins: [new ESLintPlugin()],
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
+  },
 };
 
 module.exports = config;
