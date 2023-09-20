@@ -1,7 +1,7 @@
 const StyleLintPlugin = require("stylelint-webpack-plugin");
 const packageJSON = require("./package.json");
 const path = require("path");
-// const ESLintPlugin = require("eslint-webpack-plugin");
+const ESLintPlugin = require("eslint-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
 const DIST = path.resolve("./dist");
@@ -12,13 +12,11 @@ const DEVTOOL = MODE === "development" ? SOURCE_MAP : false;
 console.log("Webpack mode:", MODE); // eslint-disable-line no-console
 
 const eslintPluginOptions = {
-  enforce: "pre",
-  test: /\.js$/,
-  extensions: [`js`, `jsx`, "ts"],
-  exclude: [/(node_modules)| Library/],
-  options: {
-    failOnError: true,
-  },
+  // enforce: "pre",
+  // test: /\.js?$/,
+  extensions: ["js", "jsx", "ts"],
+  exclude: ["/(node_modules)/", "/Library/"],
+  failOnError: true,
 };
 
 const config = {
@@ -60,7 +58,7 @@ const config = {
       },
     ],
   },
-  plugins: [new StyleLintPlugin()],
+  plugins: [new StyleLintPlugin(), new ESLintPlugin(eslintPluginOptions)],
   // plugins: [new ESLintPlugin()],
   optimization: {
     minimize: true,

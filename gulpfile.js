@@ -83,6 +83,6 @@ gulp.task("webpack-build", (done) => {
 
 gulp.task("build", gulp.series("clean", "webpack-build", "qext", "add-assets"));
 
-gulp.task("zip", () => gulp.series("build", "zip-build"));
+gulp.task("zip", gulp.series("build", "zip-build"));
 
 gulp.task("default", () => gulp.series("build"));

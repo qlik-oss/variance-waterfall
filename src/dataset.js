@@ -17,19 +17,16 @@ export async function initVarianceCube(component, layout) {
 
   // If this is a master object, fetch the hyperCubeDef of the original object
   let hyperCubeDef = properties.qExtendsId
-    ? (await app.getObjectProperties(properties.qExtendsId)).properties
-        .qHyperCubeDef
+    ? (await app.getObjectProperties(properties.qExtendsId)).properties.qHyperCubeDef
     : properties.qHyperCubeDef;
   hyperCubeDef = JSON.parse(JSON.stringify(hyperCubeDef));
   hyperCubeDef.qStateName = layout.qStateName;
 
   const measures = hyperCubeDef.qMeasures;
-  console.log("measures: ", JSON.stringify(measures));
   let expression;
   if (
-    JSON.stringify(measures[0].qDef.qNumFormat) ===
-      JSON.stringify(measures[1].qDef.qNumFormat) &&
-    measures[0].qDef.qNumFormat
+    JSON.stringify(measures[0].qDef.qNumFormat) === JSON.stringify(measures[1].qDef.qNumFormat)
+    && measures[0].qDef.qNumFormat
   ) {
     let formatter;
     switch (measures[0].qDef.qNumFormat.qType) {
@@ -52,9 +49,8 @@ export async function initVarianceCube(component, layout) {
   }
 
   if (
-    !measures[0].qAttributeExpressions ||
-    measures[0].qAttributeExpressions.length === 0 ||
-    measures[0].qAttributeExpressions[0].qExpression !== expression
+    !measures[0].qAttributeExpressions || measures[0].qAttributeExpressions.length === 0 
+    || measures[0].qAttributeExpressions[0].qExpression !== expression
   ) {
     // Update properties with the new expression
     hyperCubeDef.qMeasures[0].qAttributeExpressions = [

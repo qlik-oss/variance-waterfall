@@ -44,15 +44,15 @@ export default function (element, layout, direction, isInteractable) {
         invert: true,
         expand: 0.01,
         min:
-          !layout.measureAxis.autoMinMax &&
-          (layout.measureAxis.minMax == "min" ||
-            layout.measureAxis.minMax == "minMax")
+          !layout.measureAxis.autoMinMax
+          && (layout.measureAxis.minMax == "min"
+          || layout.measureAxis.minMax == "minMax")
             ? layout.measureAxis.min
             : NaN,
         max:
-          !layout.measureAxis.autoMinMax &&
-          (layout.measureAxis.minMax == "max" ||
-            layout.measureAxis.minMax == "minMax")
+          !layout.measureAxis.autoMinMax
+          && (layout.measureAxis.minMax == "max"
+          || layout.measureAxis.minMax == "minMax")
             ? layout.measureAxis.max
             : NaN,
         include: [0],
@@ -79,9 +79,9 @@ export default function (element, layout, direction, isInteractable) {
       {
         type: "text",
         show:
-          layout.measureAxis.show != "none" &&
-          layout.measureAxis.show != "labels" &&
-          layout.measureAxis.title != "",
+          layout.measureAxis.show != "none"
+          && layout.measureAxis.show != "labels"
+          && layout.measureAxis.title != "",
         text: layout.measureAxis.title,
         layout: {
           dock: layout.measureAxis.dock === "near" ? dockLeft : dockRight,
@@ -97,8 +97,8 @@ export default function (element, layout, direction, isInteractable) {
       {
         type: "text",
         show:
-          layout.dimensionAxis.show != "none" &&
-          layout.dimensionAxis.show != "labels",
+          layout.dimensionAxis.show != "none"
+          && layout.dimensionAxis.show != "labels",
         text: layout.qHyperCube.qDimensionInfo[0].qFallbackTitle,
         layout: {
           dock: layout.dimensionAxis.dock === "near" ? "bottom" : "top",
@@ -123,19 +123,19 @@ export default function (element, layout, direction, isInteractable) {
           trigger: !isInteractable
             ? []
             : [
-                {
-                  on: "tap",
-                  contexts: ["highlight"],
-                  globalPropagation: "stop",
-                  propagation: "stop",
-                },
-              ],
+              {
+                on: "tap",
+                contexts: ["highlight"],
+                globalPropagation: "stop",
+                propagation: "stop",
+              },
+            ],
         },
         settings: {
           labels: {
             show:
-              layout.dimensionAxis.show != "none" &&
-              layout.dimensionAxis.show != "title",
+              layout.dimensionAxis.show != "none"
+              && layout.dimensionAxis.show != "title",
             mode: layout.dimensionAxis.label,
             tiltAngle: ltr ? 40 : -40,
           },
@@ -157,14 +157,14 @@ export default function (element, layout, direction, isInteractable) {
         settings: {
           labels: {
             show:
-              layout.measureAxis.show != "none" &&
-              layout.measureAxis.show != "title",
+              layout.measureAxis.show != "none"
+              && layout.measureAxis.show != "title",
             mode: layout.measureAxis.label,
           },
           ticks: {
             show:
-              layout.measureAxis.show != "none" &&
-              layout.measureAxis.show != "title",
+              layout.measureAxis.show != "none"
+              && layout.measureAxis.show != "title",
           },
           minorTicks: {
             /* Toggle minor-ticks on/off */
@@ -205,13 +205,13 @@ export default function (element, layout, direction, isInteractable) {
           trigger: !isInteractable
             ? []
             : [
-                {
-                  on: "tap",
-                  contexts: ["highlight"],
-                  globalPropagation: "stop",
-                  propagation: "stop",
-                },
-              ],
+              {
+                on: "tap",
+                contexts: ["highlight"],
+                globalPropagation: "stop",
+                propagation: "stop",
+              },
+            ],
           consume: [
             {
               context: "highlight",
@@ -272,14 +272,11 @@ export default function (element, layout, direction, isInteractable) {
             fn: function (d) {
               if (ltr) {
                 return (
-                  d.scale(d.datum.value) +
-                  d.scale.bandwidth() +
-                  (d.scale.step() - d.scale.bandwidth()) / 2
+                  d.scale(d.datum.value) + d.scale.bandwidth() + (d.scale.step() - d.scale.bandwidth()) / 2
                 );
               } else {
                 return (
-                  d.scale(d.datum.value) -
-                  (d.scale.step() - d.scale.bandwidth()) / 2
+                  d.scale(d.datum.value) - (d.scale.step() - d.scale.bandwidth()) / 2
                 );
               }
             },
