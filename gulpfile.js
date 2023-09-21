@@ -58,6 +58,12 @@ gulp.task("zip-build", () => {
     .pipe(gulp.dest(DIST));
 });
 
+gulp.task("dev-build", () => {
+  return gulp
+    .src(DIST + "/**/*")
+    .pipe(gulp.dest(DIST));
+});
+
 gulp.task("add-assets", () => {
   return gulp.src("./assets/**/*").pipe(gulp.dest(DIST));
 });
@@ -81,8 +87,15 @@ gulp.task("webpack-build", (done) => {
   });
 });
 
+
 gulp.task("build", gulp.series("clean", "webpack-build", "qext", "add-assets"));
 
-gulp.task("zip", gulp.series("build", "zip-build"));
+const changeToSourceMap = (done) => {
+  webpackConfig.devtool = 'source-map';
+  done();
+};
 
-gulp.task("default", () => gulp.series("build"));
+gulp.task("zip", gulp.series("build", "zip-build"));
+gulp.task("dev", gulp.series(changeToSourceMap , "build"));
+gulp.task("dev:zip", gulp.series(changeToSourceMap, "zip"));
+gulp.task("default", gulp.series("build"));

@@ -20,9 +20,7 @@ const eslintPluginOptions = {
 };
 
 const config = {
-  // Hard coded to be able to get the source map file
-  // devtool: DEVTOOL,
-  devtool: SOURCE_MAP,
+  devtool: DEVTOOL,
   entry: ["./src/index.js"],
   mode: MODE,
   output: {
