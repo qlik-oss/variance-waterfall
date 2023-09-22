@@ -91,7 +91,9 @@ gulp.task("webpack-build", (done) => {
 gulp.task("build", gulp.series("clean", "webpack-build", "qext", "add-assets"));
 
 const changeToSourceMap = (done) => {
-  webpackConfig.devtool = 'source-map';
+  if(webpackConfig.devtool !== 'source-map'){
+    webpackConfig.devtool = 'source-map';
+  } 
   done();
 };
 
