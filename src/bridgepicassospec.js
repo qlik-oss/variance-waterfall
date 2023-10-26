@@ -1,7 +1,7 @@
 import ThemeManager from './theme';
 import { interactionsSetup } from './interactions.js';
 
-export default function (element, layout, direction, isInteractable) {
+export default function (element, layout, direction, isInteractable, ds) {
   let labels = {
     startvalue: layout.labelsshow ? "Start Value" : layout.startName,
     endvalue: layout.labelsshow ? "End Value" : layout.endName,
@@ -32,6 +32,26 @@ export default function (element, layout, direction, isInteractable) {
     dockLeft = 'right';
     dockRight = 'left';
   }
+
+  const shouldUseFormat = (measureInfo) => !measureInfo.isCustomFormatted && (measureInfo.qIsAutoFormat || measureInfo.qNumFormat.qType === 'U');
+
+  const setFormatCell = (cell, field) => {
+    const measureInfo = ds.field(field).raw();
+    const formatter = ds.field(field).formatter();
+    const useFormatter = shouldUseFormat(measureInfo);
+    const formatCell = (cell) => (cell.qNum === 'NaN' ? '-' : formatter(cell.qNum));
+    return (useFormatter ? formatCell(cell) : cell.qText);
+  };
+  
+  const startLabelFn = (cell) => {
+    const field = 'qMeasureInfo/1';
+    return setFormatCell(cell, field);
+  };
+
+  const endLabelFn = (cell) => {
+    const field = 'qMeasureInfo/0';
+    return setFormatCell(cell, field);
+  };
 
   return {
     interactions: (!isInteractable ? [] : interactionsSetup()),
@@ -165,18 +185,21 @@ export default function (element, layout, direction, isInteractable) {
       layout: {
         displayOrder: 1
       },
-      data: {
+      data: { 
         extract: {
           field: 'qDimensionInfo/0',
           props: {
             start: {
-              field: 'qMeasureInfo/0'
+              field: 'qMeasureInfo/0',
+              label: startLabelFn
             },
             end: {
-              field: 'qMeasureInfo/1'
+              field: 'qMeasureInfo/1',
+              label: endLabelFn
             },
             var: {
-              field: 'qMeasureInfo/2'
+              field: 'qMeasureInfo/2',
+              label: endLabelFn
             }
           }
         }
