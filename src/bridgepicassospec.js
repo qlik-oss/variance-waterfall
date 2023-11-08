@@ -39,7 +39,7 @@ export default function (element, layout, direction, isInteractable, ds) {
     const measureInfo = ds.field(field).raw();
     const formatter = ds.field(field).formatter();
     const useFormatter = shouldUseFormat(measureInfo);
-    const formatCell = (cell) => (cell.qNum === 'NaN' ? '-' : formatter(cell.qNum));
+    const formatCell = (cell) => (cell.qNum === 'NaN' ? '-' : formatter(cell.qText));
     return (useFormatter ? formatCell(cell) : cell.qText);
   };
   
