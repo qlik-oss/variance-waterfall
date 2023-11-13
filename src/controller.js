@@ -16,8 +16,6 @@ export default ['$scope', '$element', function($scope, $element) {
   $scope.updated = false;
 
   $scope.app = qlik.currApp(this);
-  const localeInfo = $scope.app.model.layout.qLocaleInfo;
-  
   picasso.use(pq);
   picasso.use(picassoHammer);
 
@@ -44,20 +42,14 @@ export default ['$scope', '$element', function($scope, $element) {
   $scope.chartBrush
     = enableSelectionOnFirstDimension($scope, $scope.chart, 'highlight', $scope.layout);
   $scope.updatedData = async function(layout, isEditMode, dataUpdate) {
-    const data = {
-      type: 'q',
-      key: 'qHyperCube',
-      config: {
-        localeInfo,
-      },
-      data: await initVarianceCube($scope, layout)
-    };
-    const ds = picasso.data('q')(data);
-
     let up = {};
 
     if (dataUpdate) {
-      up.data = [data];
+      up.data = [{
+        type: 'q',
+        key: 'qHyperCube',
+        data: await initVarianceCube($scope, layout)
+      }];
     }
 
     if (isEditMode || typeof $scope.chart.settings === 'undefined') {
@@ -65,8 +57,7 @@ export default ['$scope', '$element', function($scope, $element) {
         $scope.chart.element,
         layout,
         $scope.$parent.options.direction,
-        !isEditMode && !$scope.backendApi.isSnapshot && !layout.qHyperCube.qDimensionInfo[0].qLocked,
-        ds);
+        !isEditMode && !$scope.backendApi.isSnapshot && !layout.qHyperCube.qDimensionInfo[0].qLocked);
     }
 
     $scope.chart.update(up);
