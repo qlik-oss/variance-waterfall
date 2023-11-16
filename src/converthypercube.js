@@ -70,6 +70,7 @@ class ConvertHypercube {
       qAttrExprInfo: mesInfo.qAttrExprInfo.map(i => i),
       qCardinal: mesInfo.qCardinal,
       qFallbackTitle: mesInfo.qFallbackTitle,
+      qIsAutoFormat: mesInfo.qIsAutoFormat,
       qMax: max, //mesInfo.qMax,
       qMin: min, //mesInfo.qMin,
       qSortIndicator: mesInfo.qSortIndicator,
