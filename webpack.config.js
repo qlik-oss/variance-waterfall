@@ -14,7 +14,7 @@ const config = {
   entry: ["./src/index.js"],
   mode: MODE,
   output: {
-    filename: `${packageJSON.name}.js`,
+    filename: `qlik-variance-waterfall.js`,
     libraryTarget: "amd",
     path: DIST,
   },

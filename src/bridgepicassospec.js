@@ -1,7 +1,7 @@
 import ThemeManager from './theme';
 import { interactionsSetup } from './interactions.js';
 
-export default function (element, layout, direction, isInteractable, ds) {
+export default function (element, layout, direction, isInteractable) {
   let labels = {
     startvalue: layout.labelsshow ? "Start Value" : layout.startName,
     endvalue: layout.labelsshow ? "End Value" : layout.endName,
@@ -195,7 +195,7 @@ export default function (element, layout, direction, isInteractable, ds) {
             var: {
               field: 'qMeasureInfo/2',
               label: labelFn
-            }
+            },
           }
         }
       },

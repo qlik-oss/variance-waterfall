@@ -33,12 +33,14 @@ gulp.task('qext', function () {
 		objectMode: true
 	});
 	src._read = function () {
-		this.push(new gutil.File({
-			cwd: '',
-			base: '',
-			path: pkg.name + '.qext',
-			contents: Buffer.from(JSON.stringify(qext, null, 4))
-		}));
+		this.push(
+      new gutil.File({
+        cwd: "",
+        base: "",
+        path: "qlik-variance-waterfall.qext",
+        contents: Buffer.from(JSON.stringify(qext, null, 4)),
+      })
+    );
 		this.push(null);
 	};
 	return src.pipe(gulp.dest(DIST));
@@ -49,8 +51,9 @@ gulp.task('clean', function(){
 });
 
 gulp.task('zip-build', function(){
-  return gulp.src(DIST + '/**/*')
-    .pipe(zip(`${pkg.name}_${VERSION}.zip`))
+  return gulp
+    .src(DIST + "/**/*")
+    .pipe(zip(`qlik-variance-waterfall_${VERSION}.zip`))
     .pipe(gulp.dest(DIST));
 });
 
