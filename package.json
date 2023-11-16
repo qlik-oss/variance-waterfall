@@ -1,5 +1,5 @@
 {
-  "name": "qlik-variance-waterfall",
+  "name": "@qlik/qlik-variance-waterfall",
   "version": "0.0.1",
   "description": "A Waterfall chart for displaying variance between two metrics, walking through a set of dimension values.",
   "homepage": "",
