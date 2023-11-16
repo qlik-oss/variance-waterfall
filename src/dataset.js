@@ -24,7 +24,7 @@ export async function initVarianceCube(component, layout) {
 
   const measures = hyperCubeDef.qMeasures;
   let expression;
-  if (JSON.stringify(measures[0].qDef.qNumFormat) === JSON.stringify(measures[1].qDef.qNumFormat) && measures[0].qDef.qNumFormat) {
+  if (measures[0].qDef.qNumFormat) {
     let formatter;
     switch (measures[0].qDef.qNumFormat.qType) {
       case "D":
