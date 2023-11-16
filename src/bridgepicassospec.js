@@ -43,12 +43,7 @@ export default function (element, layout, direction, isInteractable, ds) {
     return (useFormatter ? formatCell(cell) : cell.qText);
   };
   
-  const startLabelFn = (cell) => {
-    const field = 'qMeasureInfo/1';
-    return setFormatCell(cell, field);
-  };
-
-  const endLabelFn = (cell) => {
+  const labelFn = (cell) => {
     const field = 'qMeasureInfo/0';
     return setFormatCell(cell, field);
   };
@@ -191,15 +186,15 @@ export default function (element, layout, direction, isInteractable, ds) {
           props: {
             start: {
               field: 'qMeasureInfo/0',
-              label: startLabelFn
+              label: labelFn
             },
             end: {
               field: 'qMeasureInfo/1',
-              label: endLabelFn
+              label: labelFn
             },
             var: {
               field: 'qMeasureInfo/2',
-              label: endLabelFn
+              label: labelFn
             }
           }
         }
