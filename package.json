@@ -1,38 +1,50 @@
 {
-  "name": "@qlik/qlik-variance-waterfall",
+  "name": "@nebula/sn-variance-waterfall",
   "version": "0.0.1",
   "description": "A Waterfall chart for displaying variance between two metrics, walking through a set of dimension values.",
   "homepage": "",
   "repository": "https://github.com/qlik-oss/variance-waterfall",
-  "author": "Steven Pressland, Principal Solution Architect, Qlik",
+  "author": "QLIK",
   "license": "MIT",
+  "files": [
+    "api-specifications",
+    "dist",
+    "core",
+    "sn-variance-waterfall-ext"
+  ],
+  "main": "dist/sn-variance-waterfall.js",
+  "systemjs": "dist/sn-variance-waterfall.systemjs.js",
   "scripts": {
-    "build": "gulp build",
-    "build:zip": "gulp zip",
-    "eslint": "eslint src"
+    "start": "nebula serve --build false --type sn-variance-waterfall",
+    "start:mfe": "nebula serve --mfe --type sn-variance-waterfall",
+    "watch": "nebula serve --type sn-variance-waterfall",
+    "watch:legacy": "nebula serve --type qlik-variance-waterfall",
+    "build": "nebula build --core core",
+    "sense": "nebula sense --meta assets/meta.json && shx cp assets/qlik-variance-waterfall.png sn-variance-waterfall-ext",
+    "eslint": "eslint src",
+    "spec": "sy from-jsdoc -c ./api-spec/props.conf.js",
+    "test:e2e": "playwright test"
   },
   "devDependencies": {
-    "@babel/core": "7.23.0",
-    "@babel/polyfill": "7.0.0",
-    "@babel/preset-env": "7.1.0",
-    "babel-eslint": "10.0.1",
-    "babel-loader": "8.0.4",
-    "del": "2.0.2",
-    "eslint": "5.7.0",
-    "eslint-loader": "2.1.1",
-    "gulp": "4.0.0",
-    "gulp-util": "^3.0.7",
-    "gulp-zip": "3.0.2",
-    "stylelint": "8.4.0",
-    "stylelint-webpack-plugin": "0.10.5",
-    "webpack": "4.47.0"
-  },
-  "dependencies": {
+    "@nebula.js/cli": "4.9.0",
+    "@nebula.js/cli-build": "4.9.0",
+    "@nebula.js/cli-sense": "4.9.0",
+    "@nebula.js/cli-serve": "4.9.0",
+    "@nebula.js/stardust": "4.9.0",
+    "@playwright/test": "1.37.0",
+    "@scriptappy/cli": "0.8.0",
+    "@scriptappy/from-jsdoc": "0.17.0",
     "css-loader": "^2.1.0",
-    "html-loader": "^0.5.5",
-    "picasso-plugin-hammer": "^0.25.3",
-    "picasso-plugin-q": "^0.25.3",
-    "picasso.js": "^0.25.3",
+    "hammerjs": "2.0.8",
+    "picasso-plugin-hammer": ">=2.2.5",
+    "picasso-plugin-q": ">=2.2.5",
+    "picasso.js": ">=2.2.5",
     "style-loader": "^0.23.1"
+  },
+  "peerDependencies": {
+    "@nebula.js/stardust": ">=2.0.0"
+  },
+  "engines": {
+    "node": ">=18.10"
   }
 }

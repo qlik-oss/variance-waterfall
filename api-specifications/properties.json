@@ -1,0 +1,72 @@
+{
+  "scriptappy": "1.1.0",
+  "info": {
+    "name": "@nebula/sn-variance-waterfall:properties",
+    "description": "Variance waterfall generic object definition",
+    "version": "0.0.1",
+    "license": "MIT",
+    "stability": "stable",
+    "x-qlik-visibility": "public"
+  },
+  "entries": {
+    "properties": {
+      "extends": [
+        {
+          "type": "GenericObjectProperties"
+        }
+      ],
+      "entries": {
+        "version": {
+          "description": "Current version of this generic object definition",
+          "type": "string"
+        },
+        "qHyperCubeDef": {
+          "description": "Extends `HyperCubeDef`, see Engine API: `HyperCubeDef`.",
+          "extends": [
+            {
+              "type": "EngineAPI.HyperCubeDef"
+            }
+          ],
+          "kind": "object"
+        },
+        "showTitles": {
+          "optional": true,
+          "defaultValue": false,
+          "type": "boolean"
+        },
+        "title": {
+          "optional": true,
+          "defaultValue": "",
+          "type": "string"
+        },
+        "subtitle": {
+          "optional": true,
+          "defaultValue": "",
+          "type": "string"
+        },
+        "footnote": {
+          "optional": true,
+          "defaultValue": "",
+          "type": "string"
+        },
+        "disableNavMenu": {
+          "optional": true,
+          "defaultValue": false,
+          "type": "boolean"
+        },
+        "showDetails": {
+          "optional": true,
+          "defaultValue": true,
+          "type": "boolean"
+        },
+        "showDetailsExpression": {
+          "optional": true,
+          "defaultValue": false,
+          "type": "boolean"
+        }
+      },
+      "kind": "object"
+    }
+  },
+  "definitions": {}
+}
