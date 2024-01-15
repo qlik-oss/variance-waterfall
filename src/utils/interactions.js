@@ -62,6 +62,7 @@ var enableSelectionOnFirstDimension = function (selections, chart, brush) {
       chartBrush.end();
       selections.clear();
     } else if (selection.method === "selectHyperCubeValues") {
+      selections.begin("/qHyperCubeDef");
       let addedvals = [];
       let removedvals = [];
       if (added.length > 0) {
@@ -72,12 +73,19 @@ var enableSelectionOnFirstDimension = function (selections, chart, brush) {
       }
       let list = addedvals.concat(removedvals);
       if (list.length !== 0) {
-        selections.select(selection.params[1], list, true); // needs correct params
+        selections.select({
+          method: "selectHyperCubeValues",
+          params: ["/qHyperCubeDef", 0, list, true],
+        });
       }
     } else if (selection.method === "rangeSelectHyperCubeValues") {
-      if (chartBrush.isActive) {
-        selections, select(/*Range*/ selection.params[1], true); // needs correct params
-      }
+      // TODO: This never seem to happen? There is no range select on the measure axis
+      /*if (chartBrush.isActive) {
+         selections.select({
+          method: "selectRange???",
+          params: ["/qHyperCubeDef", 0, list, true],
+        }); // needs correct params
+      }*/
     }
   });
   return chartBrush;
