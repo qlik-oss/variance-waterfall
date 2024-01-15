@@ -20,6 +20,8 @@ $RECYCLE.BIN/
 # Temporary build files
 node_modules/
 dist/
+core/esm/
+sn-variance-waterfall-ext/
 BUMPED_VERSION
 
 # =========================
