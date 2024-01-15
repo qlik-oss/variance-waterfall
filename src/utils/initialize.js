@@ -33,7 +33,7 @@ export default function init({
   const chart = pic.chart({
     element,
     updated: () => {
-      //$scope.updated = true; // NEED TO CHECK WHAT THESE ARE FOR?
+      //$scope.updated = true; // TODO: NEED TO CHECK WHAT THESE ARE FOR?
     },
     beforeUpdated: () => {
       //$scope.updated = false;

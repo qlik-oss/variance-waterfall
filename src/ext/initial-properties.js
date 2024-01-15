@@ -1,12 +1,18 @@
 // TODO: Fill in the rest of the json spec
-export default {
+/**
+ * @type {object}
+ * @extends {GenericObjectProperties}
+ * @entry
+ */
+const properties = {
   /**
    * Current version of this generic object definition
    * @type {string}
    */
   version: process.env.PACKAGE_VERSION,
   /**
-   * @typedef
+   * Extends `HyperCubeDef`, see Engine API: `HyperCubeDef`.
+   * @extends {EngineAPI.HyperCubeDef}
    */
   qHyperCubeDef: {
     qDimensions: [],
@@ -105,3 +111,5 @@ export default {
     dock: "near",
   },
 };
+
+export default properties;
