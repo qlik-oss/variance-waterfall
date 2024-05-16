@@ -1,6 +1,7 @@
 import picasso from 'picasso.js';
 import pq from 'picasso-plugin-q';
 import picassoHammer from 'picasso-plugin-hammer';
+import Hammer from 'hammerjs';
 
 import bridgepicassospec from "./bridgepicassospec";
 import ThemeManager from './theme';
@@ -19,7 +20,7 @@ export default ['$scope', '$element', function($scope, $element) {
   const localeInfo = $scope.app.model.layout.qLocaleInfo;
 
   picasso.use(pq);
-  picasso.use(picassoHammer);
+  picasso.use(picassoHammer(Hammer));
 
   $scope.pic = picasso({
     renderer: {
