@@ -1,4 +1,5 @@
 export default function ($element, layout) {
+  // eslint-disable-next-line no-underscore-dangle
   if (this._pureLayout !== this.backendApi.model.pureLayout) {
     return this.paint($element, layout);
   }
