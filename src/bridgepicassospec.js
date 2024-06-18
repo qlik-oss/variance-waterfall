@@ -33,7 +33,8 @@ export default function (element, layout, direction, isInteractable, ds) {
     dockRight = 'left';
   }
 
-  const shouldUseFormat = (measureInfo) => !measureInfo.isCustomFormatted && (measureInfo.qIsAutoFormat || measureInfo.qNumFormat.qType === 'U');
+  const shouldUseFormat = (measureInfo) =>
+    !measureInfo.isCustomFormatted && (measureInfo.qIsAutoFormat || measureInfo.qNumFormat.qType === 'U');
 
   const setFormatCell = (cell, field) => {
     const measureInfo = ds.field(field).raw();
@@ -180,7 +181,7 @@ export default function (element, layout, direction, isInteractable, ds) {
       layout: {
         displayOrder: 1
       },
-      data: { 
+      data: {
         extract: {
           field: 'qDimensionInfo/0',
           props: {
