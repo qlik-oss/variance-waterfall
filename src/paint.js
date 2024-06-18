@@ -6,6 +6,7 @@ export default function ($element, layout) {
   this.$scope.updatedData(layout, isEditMode, true);
   // eslint-disable-next-line no-underscore-dangle
   this._pureLayout = this.backendApi.model.pureLayout || this.backendApi.model.layout;
+
   return app.theme.getApplied().then(async (qTheme) => {
     this.$scope.theme = qTheme;
     ThemeManager.setAppTheme(this.$scope.theme);
