@@ -17,7 +17,7 @@ export default ['$scope', '$element', function($scope, $element) {
   $scope.updated = false;
 
   $scope.app = qlik.currApp(this);
-  const localeInfo = $scope.app.model.layout.qLocaleInfo;
+  const localeInfo = $scope.app ? $scope.app.model.layout.qLocaleInfo : {};
 
   picasso.use(pq);
   picasso.use(picassoHammer(Hammer));
