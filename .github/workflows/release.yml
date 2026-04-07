@@ -1,0 +1,52 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GITHUB_ORG: ${{ github.repository_owner }}
+      GITHUB_REPO: ${{ github.event.repository.name }}
+      PACKAGE_NAME: "qlik-variance-waterfall"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '16'
+
+      - name: Bump version
+        id: bump-version
+        run: |
+          chmod +x scripts/bump-version.sh
+          chmod +x scripts/get-latest-version.sh
+          scripts/bump-version.sh ${{ github.repository_owner }} ${{ github.event.repository.name }}
+          VERSION=$(cat BUMPED_VERSION)
+          echo "VERSION=${VERSION}" >> "$GITHUB_OUTPUT"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build and package
+        env:
+          NODE_ENV: production
+          VERSION: ${{ steps.bump-version.outputs.VERSION }}
+        run: |
+          echo "Version: ${VERSION}"
+          npm run build:zip
+          chmod +x scripts/verify-files.sh
+          scripts/verify-files.sh
+
+      - name: Create GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.bump-version.outputs.VERSION }}
+        run: |
+          chmod +x scripts/create-release.sh
+          scripts/create-release.sh ${{ github.repository_owner }} ${{ github.event.repository.name }} ${PACKAGE_NAME} ${VERSION}
