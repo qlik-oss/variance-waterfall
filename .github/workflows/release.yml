@@ -4,16 +4,19 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
-  release:
+  build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
     env:
-      GITHUB_ORG: ${{ github.repository_owner }}
-      GITHUB_REPO: ${{ github.event.repository.name }}
       PACKAGE_NAME: "qlik-variance-waterfall"
+    outputs:
+      version: ${{ steps.bump-version.outputs.VERSION }}
     steps:
       - uses: actions/checkout@v4
 
@@ -43,10 +46,34 @@ jobs:
           chmod +x scripts/verify-files.sh
           scripts/verify-files.sh
 
+      - name: Upload artifact
+        if: github.event_name == 'push' && github.ref_name == 'master'
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  release:
+    needs: build
+    if: github.event_name == 'push' && github.ref_name == 'master'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      PACKAGE_NAME: "qlik-variance-waterfall"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
       - name: Create GitHub Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VERSION: ${{ steps.bump-version.outputs.VERSION }}
+          VERSION: ${{ needs.build.outputs.version }}
         run: |
           chmod +x scripts/create-release.sh
           scripts/create-release.sh ${{ github.repository_owner }} ${{ github.event.repository.name }} ${PACKAGE_NAME} ${VERSION}
