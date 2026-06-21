@@ -12,11 +12,11 @@
     "eslint": "eslint src"
   },
   "devDependencies": {
-    "@babel/core": "7.23.0",
+    "@babel/core": "8.0.1",
     "@babel/polyfill": "7.0.0",
-    "@babel/preset-env": "7.1.0",
+    "@babel/preset-env": "8.0.2",
     "babel-eslint": "10.0.1",
-    "babel-loader": "8.0.4",
+    "babel-loader": "10.1.1",
     "del": "2.0.2",
     "eslint": "7.32.0",
     "eslint-loader": "4.0.2",
